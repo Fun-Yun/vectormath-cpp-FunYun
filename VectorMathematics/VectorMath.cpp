@@ -5,6 +5,42 @@
 #include "VectorMath.h"
 #include <cmath>
 
+
+Vec2 VectorAdd2D(Vec2 a, Vec2 b) {
+	return { a.x + b.x, a.y + b.y };
+}
+
+Vec2 VectorSubtract2D(Vec2 a, Vec2 b) {
+	return { a.x - b.x, a.y - b.y};
+}
+
+Vec2 VectorScale2D(Vec2 v, float scale) {
+	return { scale * v.x, scale * v.y};
+}
+
+Vec2 VectorDivide2D(Vec2 v, float scalar) {
+	if (scalar < 0.0001f) {
+		return {0.0f};
+	}
+	return { v.x / scalar, v.y / scalar};
+}
+
+float VectorMagnitude2D(Vec2 v) {
+	return sqrtf(v.x * v.x + v.y * v.y);
+}
+
+Vec2 VectorNormalize2D(Vec2 v) {
+	float m = VectorMagnitude2D(v);
+	if (m < 0.0001f) {
+		return {0.0f, 0.0f};
+	}
+	return VectorDivide2D(v, m);
+}
+
+float VectorDot2D(Vec2 a, Vec2 b) {
+	return a.x * b.x + a.y * b.y;
+}
+
 Vec3 VectorAdd(Vec3 a, Vec3 b) {
 	return { a.x + b.x, a.y + b.y, a.z + b.z };
 }
@@ -13,24 +49,19 @@ Vec3 VectorSubtract(Vec3 a, Vec3 b) {
 	return { a.x - b.x, a.y - b.y, a.z - b.z };
 }
 
-Vec3 VectorMultiplication(Vec3 v, float scale) {
+Vec3 VectorScale(Vec3 v, float scale) {
 	return { scale * v.x, scale * v.y, scale * v.z };
 }
 
 Vec3 VectorDivide(Vec3 v, float scalar) {
+	if (scalar < 0.0001f) {
+		return { 0.0f };
+	}
 	return { v.x / scalar, v.y / scalar, v.z / scalar };
 }
 
 float VectorMagnitude(Vec3 v) {
 	return sqrtf(v.x * v.x + v.y * v.y + v.z * v.z);
-}
-
-float VectorMagnitude2D(Vec2 v) {
-	return sqrtf(v.x * v.x + v.y * v.y);
-}
-
-float VectorMagnitudeSqr(Vec3 v) {
-	return v.x * v.x + v.y * v.y + v.z * v.z;
 }
 
 Vec3 VectorNormalize(Vec3 v) {
@@ -51,10 +82,6 @@ Vec3 VectorCross(Vec3 a, Vec3 b) {
 			 a.x * b.y - a.y * b.x };
 }
 
-float VectorDistance(Vec3 a, Vec3 b) {
-	return VectorMagnitude(VectorSubtract(a, b));
-}
-
 Vec3 VectorLerp(Vec3 a, Vec3 b, float t) {
 	return {
 		a.x + t * (b.x - a.x),
@@ -63,10 +90,22 @@ Vec3 VectorLerp(Vec3 a, Vec3 b, float t) {
 	};
 }
 
-
 Vec3 VectorReflect(Vec3 v, Vec3 normal) {
 	normal = VectorNormalize(normal);
 	float d = VectorDot(v, normal);
-	return VectorSubtract(v, VectorMultiplication(normal, 2.0f * d));
+	return VectorSubtract(v, VectorScale(normal, 2.0f * d));
+}
+
+Vec2 VectorLerp2D(Vec2 a, Vec2 b, float t) {
+	return {
+		a.x + t * (b.x - a.x),
+		a.y + t * (b.y - a.y),
+	};
+}
+
+Vec2 VectorReflect2D(Vec2 v, Vec2 normal) {
+	normal = VectorNormalize2D(normal);
+	float d = VectorDot2D(v, normal);
+	return VectorSubtract2D(v, VectorScale2D(normal, 2.0f * d));
 }
 
