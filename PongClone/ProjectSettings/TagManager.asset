@@ -8,6 +8,7 @@ TagManager:
   - Bottom
   - Player1
   - Player2
+  - Goal
   layers:
   - Default
   - TransparentFX

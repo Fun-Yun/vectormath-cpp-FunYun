@@ -5,18 +5,14 @@ public class BallMovement : MonoBehaviour
     [SerializeField] private float speed;
     private Vec2 direction;  
     private Vec2 position;
-    private Rigidbody2D rb;
+    private Vec2 startPos;
+    private Vec2 movement;
     
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        startPos = new Vec2(transform.position.x, transform.position.y);
         
-        float x = Random.Range(0, 2) == 0 ? -1 : 1;
-        float y = Random.Range(-1f, 1f);
-        direction = new Vec2(x, y);
-        direction = VectorMath.VectorNormalize2D(direction);
-        
-        rb.linearVelocity = direction.ToUnityVector2() * speed;
+        ServeBall();
     }
 
     void Update()
@@ -26,7 +22,21 @@ public class BallMovement : MonoBehaviour
         movement = VectorMath.VectorScale2D(movement, speed * Time.deltaTime);
         position = VectorMath.VectorAdd2D(position, movement);
         transform.position = position.ToUnityVector2();
-        
+    }
+
+    void ServeBall()
+    {
+        float x = Random.Range(0, 2) == 0 ? -1 : 1;
+        float y = Random.Range(-1f, 1f);
+        direction = new Vec2(x, y);
+        direction = VectorMath.VectorNormalize2D(direction);
+    }
+
+    void ResetBall()
+    {
+        movement =  new Vec2(0, 0);
+        position = startPos;
+        ServeBall();
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -47,6 +57,16 @@ public class BallMovement : MonoBehaviour
         
         //Reflect ball reflected = V - 2 * (V · N) * N
         direction = VectorMath.VectorReflect2D(direction, surfaceNormal);
+    }
+    
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log("TRIGGER HIT: " + other.name);
+        
+        if (other.CompareTag("Goal"))
+        {
+            ResetBall();
+        }
     }
 }
 
