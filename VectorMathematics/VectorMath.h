@@ -51,6 +51,15 @@ extern "C" {
 
     EXPORT Vec2 VectorLerp2D(Vec2 a, Vec2 b, float t);
     EXPORT Vec2 VectorReflect2D(Vec2 v, Vec2 normal);
+
+
+    //Advanced
+    EXPORT Vec2 VectorClampMagnitude2D(Vec2 v, float maxLength);
+    EXPORT Vec3 VectorClampMagnitude(Vec3 v, float maxLength);
+
+    EXPORT float Clamp(float v, float minVal, float maxVal);
+    EXPORT Vec3 VectorClamp(Vec3 v, float minVal, float maxVal);
+    EXPORT Vec2 VectorClamp2D(Vec2 v, float minVal, float maxVal);
 }
 
 #endif

@@ -109,3 +109,47 @@ Vec2 VectorReflect2D(Vec2 v, Vec2 normal) {
 	return VectorSubtract2D(v, VectorScale2D(normal, 2.0f * d));
 }
 
+Vec2 VectorClampMagnitude2D(Vec2 v, float maxLength) {
+	float m = VectorMagnitude2D(v);
+	if (m < 0.0001f) {
+		return { 0.0f, 0.0f };
+	}
+	if (m > maxLength) {
+		v = VectorNormalize2D(v);
+		return VectorScale2D(v, maxLength);
+	}
+	return v;
+}
+
+Vec3 VectorClampMagnitude(Vec3 v, float maxLength) {
+	float m = VectorMagnitude(v);
+	if (m < 0.0001f) {
+		return { 0.0f, 0.0f, 0.0f };
+	}
+	if (m > maxLength) {
+		v = VectorNormalize(v);
+		return VectorScale(v, maxLength);
+	}
+	return v;
+}
+
+float Clamp(float v, float minVal, float maxVal) {
+	if (v > maxVal) 
+		return maxVal;
+	if (v < minVal) 
+		return minVal;
+	return v;
+}
+
+Vec3 VectorClamp(Vec3 v, float minVal, float maxVal) {
+	return{ Clamp(v.x, minVal, maxVal),
+		Clamp(v.y, minVal,maxVal),
+		Clamp(v.x, minVal, maxVal)};
+}
+
+Vec2 VectorClamp2D(Vec2 v, float minVal, float maxVal) {
+	return{ Clamp(v.x, minVal, maxVal),
+		Clamp(v.y, minVal,maxVal)};
+}
+
+
