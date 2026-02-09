@@ -63,4 +63,20 @@ public static class VectorMath
 
     [DllImport(DllName)]
     public static extern Vec2 VectorReflect2D(Vec2 v, Vec2 normal);
+    
+    //Advanced
+    [DllImport(DllName)]
+    public static extern float Clamp(float v, float minVal, float maxVal);
+    
+    [DllImport(DllName)]
+    public static extern Vec3 VectorClampMagnitude(Vec3 v, float maxLength);
+
+    [DllImport(DllName)]
+    public static extern Vec3 VectorClamp(Vec3 v, float minVal, float maxVal);
+    
+    [DllImport(DllName)]
+    public static extern Vec2 VectorClampMagnitude2D(Vec2 v, float maxLength);
+
+    [DllImport(DllName)]
+    public static extern Vec2 VectorClamp2D(Vec2 v, float minVal, float maxVal);
 }

@@ -23,6 +23,8 @@ public class PaddleMovement : MonoBehaviour
         movement = VectorMath.VectorScale2D(movement, speed * Time.deltaTime);
         
         position = VectorMath.VectorAdd2D(position, movement);
+
+        position.y = VectorMath.Clamp(position.y, -3.5f, 3.5f);
         
         transform.position = position.ToUnityVector2();
     }
