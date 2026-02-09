@@ -1,3 +1,6 @@
-﻿  VectorMath.cpp
+﻿  pch.cpp
+  dllmain.cpp
+  VectorMath.cpp
+  Generating Code...
      Creating library S:\Documents\Forsberg\Projects\VectorMath\vectormath-cpp-FunYun\x64\Debug\VectorMathematics.lib and object S:\Documents\Forsberg\Projects\VectorMath\vectormath-cpp-FunYun\x64\Debug\VectorMathematics.exp
   VectorMathematics.vcxproj -> S:\Documents\Forsberg\Projects\VectorMath\vectormath-cpp-FunYun\x64\Debug\VectorMathematics.dll

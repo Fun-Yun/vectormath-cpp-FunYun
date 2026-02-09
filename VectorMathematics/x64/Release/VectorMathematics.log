@@ -1,0 +1,9 @@
+﻿  pch.cpp
+  dllmain.cpp
+  VectorMath.cpp
+     Creating library S:\Documents\Forsberg\Projects\VectorMath\vectormath-cpp-FunYun\x64\Release\VectorMathematics.lib and object S:\Documents\Forsberg\Projects\VectorMath\vectormath-cpp-FunYun\x64\Release\VectorMathematics.exp
+  Generating code
+  Previous IPDB not found, fall back to full compilation.
+  All 20 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  VectorMathematics.vcxproj -> S:\Documents\Forsberg\Projects\VectorMath\vectormath-cpp-FunYun\x64\Release\VectorMathematics.dll
