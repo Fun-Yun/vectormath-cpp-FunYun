@@ -32,7 +32,7 @@ public class BallMovement : MonoBehaviour
         direction = VectorMath.VectorNormalize2D(direction);
     }
 
-    void ResetBall()
+    public void ResetBall()
     {
         movement =  new Vec2(0, 0);
         position = startPos;
