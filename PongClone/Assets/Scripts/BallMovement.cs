@@ -3,25 +3,31 @@ using UnityEngine;
 public class BallMovement : MonoBehaviour
 {
     [SerializeField] private float speed;
+    [SerializeField] private float startSpeed = 2;
     private Vec2 direction;  
     private Vec2 position;
     private Vec2 startPos;
     private Vec2 movement;
+
+    public bool gameEnded;
     
     void Start()
     {
+        gameEnded = false;
         startPos = new Vec2(transform.position.x, transform.position.y);
-        
+        speed = startSpeed;
         ServeBall();
     }
 
     void Update()
     {
-        //transform.Translate(direction * (speed * Time.deltaTime));
-        Vec2 movement = direction;
-        movement = VectorMath.VectorScale2D(movement, speed * Time.deltaTime);
-        position = VectorMath.VectorAdd2D(position, movement);
-        transform.position = position.ToUnityVector2();
+        if (!gameEnded)
+        {
+            //transform.Translate(direction * (speed * Time.deltaTime));
+            movement = VectorMath.VectorScale2D(direction, speed * Time.deltaTime);
+            position = VectorMath.VectorAdd2D(position, movement);
+            transform.position = position.ToUnityVector2();
+        }
     }
 
     void ServeBall()
@@ -36,6 +42,7 @@ public class BallMovement : MonoBehaviour
     {
         movement =  new Vec2(0, 0);
         position = startPos;
+        speed = startSpeed;
         ServeBall();
     }
 
@@ -57,6 +64,7 @@ public class BallMovement : MonoBehaviour
         
         //Reflect ball reflected = V - 2 * (V · N) * N
         direction = VectorMath.VectorReflect2D(direction, surfaceNormal);
+        speed += .5f;
     }
     
     private void OnTriggerEnter2D(Collider2D other)

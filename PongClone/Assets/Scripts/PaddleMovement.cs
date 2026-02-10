@@ -6,6 +6,7 @@ public class PaddleMovement : MonoBehaviour
     public float speed = 10f;
     private Vec2 moveInput;
     private Vec2 position;
+    private Vec2 startPosition;
 
     public void OnMove(InputAction.CallbackContext context)
     {
@@ -15,6 +16,7 @@ public class PaddleMovement : MonoBehaviour
     void Start()
     {
         position = new Vec2(transform.position.x, transform.position.y);
+        startPosition = position;
     }
 
     void Update()
@@ -27,5 +29,10 @@ public class PaddleMovement : MonoBehaviour
         position.y = VectorMath.Clamp(position.y, -3.5f, 3.5f);
         
         transform.position = position.ToUnityVector2();
+    }
+
+    public void ResetPaddlePosition()
+    {
+        transform.position = startPosition.ToUnityVector2();
     }
 }
