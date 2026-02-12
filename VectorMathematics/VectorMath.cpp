@@ -144,7 +144,7 @@ float Clamp(float v, float minVal, float maxVal) {
 Vec3 VectorClamp(Vec3 v, float minVal, float maxVal) {
 	return{ Clamp(v.x, minVal, maxVal),
 		Clamp(v.y, minVal,maxVal),
-		Clamp(v.x, minVal, maxVal)};
+		Clamp(v.z, minVal, maxVal)};
 }
 
 Vec2 VectorClamp2D(Vec2 v, float minVal, float maxVal) {
