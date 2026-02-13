@@ -9,6 +9,8 @@ public class BallMovement : MonoBehaviour
     private Vec2 startPos;
     private Vec2 movement;
 
+    [SerializeField] private float maxBounceAngle = 60f;
+
     public bool gameEnded;
     
     void Start()
@@ -48,11 +50,26 @@ public class BallMovement : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
+
+        if (collision.gameObject.CompareTag("Player1") || collision.gameObject.CompareTag("Player2"))
+        {
+            GetBounceAngle(collision);
+        }
+        else
+        {
+            Vec2 surfaceNormal = Vec2.FromUnityVector2(collision.contacts[0].normal);
+            
+            direction = VectorMath.VectorReflect2D(direction, surfaceNormal);
+            direction = VectorMath.VectorNormalize2D(direction);
+        }
+
+        speed += .5f;
+
         //Get the Surface Normal
-        Vec2 surfaceNormal;
-        
-        if (collision.gameObject.CompareTag("Top"))
-            surfaceNormal = new Vec2(0, -1);
+        //Vec2 surfaceNormal;
+
+        /* if (collision.gameObject.CompareTag("Top"))
+           surfaceNormal = new Vec2(0, -1);
         else if (collision.gameObject.CompareTag("Bottom"))
             surfaceNormal = new Vec2(0, 1);
         else if (collision.gameObject.CompareTag("Player1"))
@@ -60,11 +77,40 @@ public class BallMovement : MonoBehaviour
         else if (collision.gameObject.CompareTag("Player2"))
             surfaceNormal = new Vec2(-1, 0);
         else
-            return; 
-        
+            return;
+
         //Reflect ball reflected = V - 2 * (V · N) * N
         direction = VectorMath.VectorReflect2D(direction, surfaceNormal);
-        speed += .5f;
+        speed += .5f; */
+    }
+
+    //Make the ball bounce different depending on where it hits paddle, like OG Pong
+    void GetBounceAngle(Collision2D paddleCollision)
+    {
+        Vec2 paddlePosition = Vec2.FromUnityVector2(paddleCollision.transform.position);
+        
+        
+        float positionOffset = position.y - paddlePosition.y;
+
+        float paddleHeight = paddleCollision.collider.bounds.size.y / 2f;
+        float offset = positionOffset / paddleHeight;
+        
+        offset = VectorMath.Clamp(offset, -1f, 1f);
+        offset += Random.Range(-.1f, .1f);
+        offset = VectorMath.Clamp(offset, -1f, 1f);
+        float angle = offset * maxBounceAngle * Mathf.Deg2Rad;
+        
+        bool isPlayer1 = paddleCollision.gameObject.CompareTag("Player1");
+        float directionX = Mathf.Cos(angle);
+        float directionY = Mathf.Sin(angle);
+
+        if (!isPlayer1)
+            directionX = -directionX;
+
+        direction = new Vec2(directionX, directionY);
+        
+        direction = VectorMath.VectorNormalize2D(direction);
+
     }
     
     private void OnTriggerEnter2D(Collider2D other)
