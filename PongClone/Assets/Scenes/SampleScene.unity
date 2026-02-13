@@ -895,7 +895,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32755718cfe8e0b429eaf50fae372fc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PaddleMovement
-  speed: 10
+  speed: 15
+  smoothing: 0.8
 --- !u!61 &680858556
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1507,6 +1508,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BallMovement
   speed: 0
   startSpeed: 5
+  maxBounceAngle: 60
   gameEnded: 0
 --- !u!58 &1653464957
 CircleCollider2D:
@@ -2387,7 +2389,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32755718cfe8e0b429eaf50fae372fc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PaddleMovement
-  speed: 10
+  speed: 15
+  smoothing: 0.8
 --- !u!212 &2003970664
 SpriteRenderer:
   m_ObjectHideFlags: 0
