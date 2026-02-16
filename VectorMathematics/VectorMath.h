@@ -31,6 +31,7 @@ extern "C" {
     EXPORT float VectorMagnitude2D(Vec2 v);
     EXPORT Vec2 VectorNormalize2D(Vec2 v);
     EXPORT float VectorDot2D(Vec2 a, Vec2 b);
+    EXPORT float VectorCross2D(Vec2 a, Vec2 b);
 
 
     //Vec3 Operations

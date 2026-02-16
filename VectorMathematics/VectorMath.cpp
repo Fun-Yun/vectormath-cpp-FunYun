@@ -41,6 +41,11 @@ float VectorDot2D(Vec2 a, Vec2 b) {
 	return a.x * b.x + a.y * b.y;
 }
 
+float VectorCross2D(Vec2 a, Vec2 b)
+{
+	return a.x * b.y - a.y * b.x;
+}
+
 Vec3 VectorAdd(Vec3 a, Vec3 b) {
 	return { a.x + b.x, a.y + b.y, a.z + b.z };
 }
