@@ -453,23 +453,79 @@ void TestVectorReflect2D() {
 void TestVectorClampMagnitude() {
     std::cout << "Testing VectorClampMagnitude..." << std::endl;
 
-    Vec3 v = { 6.0f, 8.0f, 0.0f }; // magnitude = 10
-    Vec3 result = VectorClampMagnitude(v, 5.0f);
+    Vec3 v = { 3.0f, 4.0f, 0.0f };
+    float maxLength = 2.0f;
+    Vec3 expectedResult = { 1.20f, 1.60f, 0.0f };
 
-    Assert(FloatEquals(VectorMagnitude(result), 5.0f), "VectorClampMagnitude magnitude should be 5");
+    Vec3 result = VectorClampMagnitude(v, maxLength);
 
-    std::cout << "[PASS] VectorClampMagnitude: all checks passed" << endline;
+    Assert(result.x == expectedResult.x, "VectorClampMagnitude X should be 1.2");
+    Assert(result.y == expectedResult.y, "VectorClampMagnitude Y should be 1.6");
+    Assert(result.z == expectedResult.z, "VectorClampMagnitude Z should be 0");
+
+    std::cout << "[PASS] VectorClampMagnitude: all component checks passed" << endline;
+}
+
+void TestVectorClampMagnitudeEdgeCase() {
+    std::cout << "Testing VectorClampMagnitude Edge Case..." << std::endl;
+
+    Vec3 v = { 1.0f, 2.0f, 2.0f }; // magnitude = 3
+    float maxLength = 5.0f;
+
+    Vec3 expectedResult = { 1.0f, 2.0f, 2.0f };
+    Vec3 result = VectorClampMagnitude(v, maxLength);
+
+    Assert(result.x == expectedResult.x, "VectorClampMagnitude edge X incorrect");
+    Assert(result.y == expectedResult.y, "VectorClampMagnitude edge Y incorrect");
+    Assert(result.z == expectedResult.z, "VectorClampMagnitude edge Z incorrect");
+
+    std::cout << "[PASS] VectorClampMagnitudeEdgeCase: all component checks passed" << endline;
+}
+
+void TestVectorClampMagnitudeZeroEdgeCase() {
+    std::cout << "Testing VectorClampMagnitude Zero Edge Case..." << std::endl;
+
+    Vec3 v = { 0.0f, 0.0f, 0.0f };
+    float maxLength = 5.0f;
+    Vec3 expectedResult = { 0.0f, 0.0f, 0.0f };
+
+    Vec3 result = VectorClampMagnitude(v, maxLength);
+
+    Assert(result.x == expectedResult.x, "VectorClampMagnitude zero X incorrect");
+    Assert(result.y == expectedResult.y, "VectorClampMagnitude zero Y incorrect");
+    Assert(result.z == expectedResult.z, "VectorClampMagnitude zero Z incorrect");
+
+    std::cout << "[PASS] VectorClampMagnitudeZeroEdgeCase: all component checks passed" << endline;
 }
 
 void TestVectorClampMagnitude2D() {
     std::cout << "Testing VectorClampMagnitude2D..." << std::endl;
 
-    Vec2 v = { 6.0f, 8.0f }; // magnitude = 10
-    Vec2 result = VectorClampMagnitude2D(v, 5.0f);
+    Vec2 v = { 6.0f, 8.0f };
+    float maxLength = 5.0f;
 
-    Assert(FloatEquals(VectorMagnitude2D(result), 5.0f), "VectorClampMagnitude2D magnitude should be 5");
+    Vec2 expectedResult = { 3.0f, 4.0f };
+    Vec2 result = VectorClampMagnitude2D(v, maxLength);
 
-    std::cout << "[PASS] VectorClampMagnitude2D: all checks passed" << endline;
+    Assert(result.x == expectedResult.x, "VectorClampMagnitude2D X should be 3");
+    Assert(result.y == expectedResult.y, "VectorClampMagnitude2D Y should be 4");
+
+    std::cout << "[PASS] VectorClampMagnitude2D: all component checks passed" << endline;
+}
+
+void TestVectorClampMagnitude2DEdgeCase() {
+    std::cout << "Testing VectorClampMagnitude2D Edge Case..." << std::endl;
+
+    Vec2 v = { 2.0f, 1.0f }; // magnitude < max
+    float maxLength = 5.0f;
+
+    Vec2 expectedResult = { 2.0f, 1.0f };
+    Vec2 result = VectorClampMagnitude2D(v, maxLength);
+
+    Assert(result.x == expectedResult.x, "VectorClampMagnitude2D edge X incorrect");
+    Assert(result.y == expectedResult.y, "VectorClampMagnitude2D edge Y incorrect");
+
+    std::cout << "[PASS] VectorClampMagnitude2DEdgeCase: all component checks passed" << endline;
 }
 
 void TestClamp() {
@@ -482,45 +538,101 @@ void TestClamp() {
     std::cout << "[PASS] Clamp: all checks passed" << endline;
 }
 
+void TestClampEdgeCase() {
+    std::cout << "Testing Clamp Edge Cases..." << std::endl;
+
+    Assert(Clamp(0.0f, 0.0f, 10.0f) == 0.0f, "Clamp should return min when value equals min");
+    Assert(Clamp(10.0f, 0.0f, 10.0f) == 10.0f, "Clamp should return max when value equals max");
+
+    std::cout << "[PASS] ClampEdgeCases: all checks passed" << endline;
+}
+
 void TestVectorClamp() {
     std::cout << "Testing VectorClamp..." << std::endl;
 
     Vec3 v = { -5.0f, 5.0f, 15.0f };
-    Vec3 result = VectorClamp(v, 0.0f, 10.0f);
+    float minRange = 0.0f;
+    float maxRange = 10.0f;
+    Vec3 expectedResult = { 0.0f, 5.0f, 10.0f };
 
-    Assert(result.x == 0.0f, "VectorClamp X should be clamped to 0");
-    Assert(result.y == 5.0f, "VectorClamp Y should remain 5");
-    Assert(result.z == 10.0f, "VectorClamp Z should be clamped to 10");
+    Vec3 result = VectorClamp(v, minRange, maxRange);
+
+    Assert(result.x == expectedResult.x, "VectorClamp X should be 0");
+    Assert(result.y == expectedResult.y, "VectorClamp Y should be 5");
+    Assert(result.z == expectedResult.z, "VectorClamp Z should be 10");
 
     std::cout << "[PASS] VectorClamp: all component checks passed" << endline;
+}
+
+void TestVectorClampEdgeCase() {
+    std::cout << "Testing VectorClamp Edge Case..." << std::endl;
+
+    Vec3 v = { 0.0f, 10.0f, 5.0f };
+    float minRange = 0.0f;
+    float maxRange = 10.0f;
+    Vec3 expectedResult = { 0.0f, 10.0f, 5.0f };
+
+    Vec3 result = VectorClamp(v, minRange, maxRange);
+
+    Assert(result.x == expectedResult.x, "VectorClamp edge X incorrect");
+    Assert(result.y == expectedResult.y, "VectorClamp edge Y incorrect");
+    Assert(result.z == expectedResult.z, "VectorClamp edge Z incorrect");
+
+    std::cout << "[PASS] VectorClampEdgeCase: all component checks passed" << endline;
 }
 
 void TestVectorClamp2D() {
     std::cout << "Testing VectorClamp2D..." << std::endl;
 
-    Vec2 v = { -5.0f, 15.0f };
-    Vec2 result = VectorClamp2D(v, 0.0f, 10.0f);
+    Vec2 v = { -2.0f, 12.0f };
+    float minRange = 0.0f;
+    float maxRange = 10.0f;
+    Vec2 expectedResult = { 0.0f, 10.0f };
 
-    Assert(result.x == 0.0f, "VectorClamp2D X should be clamped to 0");
-    Assert(result.y == 10.0f, "VectorClamp2D Y should be clamped to 10");
+    Vec2 result = VectorClamp2D(v, minRange, maxRange);
+
+    Assert(result.x == expectedResult.x, "VectorClamp2D X component incorrect");
+    Assert(result.y == expectedResult.y, "VectorClamp2D Y component incorrect");
 
     std::cout << "[PASS] VectorClamp2D: all component checks passed" << endline;
+}
+
+void TestVectorClamp2DEdgeCase() {
+    std::cout << "Testing VectorClamp2D Edge Case..." << std::endl;
+
+    Vec2 v = { 0.0f, 10.0f };
+    float minRange = 0.0f;
+    float maxRange = 10.0f;
+    Vec2 expectedResult = { 0.0f, 10.0f };
+
+    Vec2 result = VectorClamp2D(v, minRange, maxRange);
+
+    Assert(result.x == expectedResult.x, "VectorClamp2D edge X incorrect");
+    Assert(result.y == expectedResult.y, "VectorClamp2D edge Y incorrect");
+
+    std::cout << "[PASS] VectorClamp2DEdgeCase: all component checks passed" << endline;
 }
 
 int main() {
     std::cout << "=== Vector 3 Math Tests ===" << std::endl << std::endl;
 
+    // ===== Vector3 Basic =====
     TestVectorAdd();
     TestVectorSubtract();
     TestVectorScale();
     TestVectorDivide();
     TestVectorDivideByZero();
-    
+
     TestVectorMagnitude();
     TestVectorNormalize();
     TestZeroVectorNormalize();
 
+    TestVectorDot();
+    TestVectorCross();
 
+    std::cout << "=== Vector 2 Math Tests ===" << std::endl << std::endl;
+
+    // ===== Vector2 Basic =====
     TestVector2DAdd();
     TestVector2DSubtract();
     TestVector2DScale();
@@ -531,8 +643,49 @@ int main() {
     TestVectorNormalize2D();
     TestZeroVectorNormalize2D();
 
-    std::cout << std::endl << "All tests passed!" << std::endl;
+    TestVectorDot2D();
+    TestVectorCross2D();
 
+    std::cout << "=== Lerp & Reflect Tests ===" << std::endl << std::endl;
+
+    // ===== Lerp 3D =====
+    TestVectorLerp();
+    TestVectorLerpZeroEdgeCase();
+    TestVectorLerpOneEdgeCase();
+
+    // ===== Lerp 2D =====
+    TestVectorLerp2D();
+    TestVector2DLerpZeroEdgeCase();
+    TestVector2DLerpOneEdgeCase();
+
+    // ===== Reflect =====
+    TestVectorReflect();
+    TestVectorReflect2D();
+
+    std::cout << "=== Clamp & Advanced Tests ===" << std::endl << std::endl;
+
+    // ===== Clamp Magnitude 3D =====
+    TestVectorClampMagnitude();
+    TestVectorClampMagnitudeEdgeCase();
+    TestVectorClampMagnitudeZeroEdgeCase();
+
+    // ===== Clamp Magnitude 2D =====
+    TestVectorClampMagnitude2D();
+    TestVectorClampMagnitude2DEdgeCase();
+
+    // ===== Scalar Clamp =====
+    TestClamp();
+    TestClampEdgeCase();
+
+    // ===== Vector Clamp 3D =====
+    TestVectorClamp();
+    TestVectorClampEdgeCase();
+
+    // ===== Vector Clamp 2D =====
+    TestVectorClamp2D();
+    TestVectorClamp2DEdgeCase();
+
+    std::cout << std::endl << "All tests passed!" << std::endl;
     std::cout << "\nPress Enter to exit..." << std::endl;
     std::cin.get();
 

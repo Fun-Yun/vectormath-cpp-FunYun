@@ -1,7 +1,8 @@
 ﻿  VectorMathematicsTests.cpp
-  Generating code
-  4 of 32 functions (12.5%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
-  Finished generating code
-  VectorMathematicsTests.vcxproj -> S:\Documents\Forsberg\Projects\VectorMath\vectormath-cpp-FunYun\x64\Release\VectorMathematicsTests.exe
+VectorMathematicsTests.obj : error LNK2001: unresolved external symbol Clamp
+VectorMathematicsTests.obj : error LNK2001: unresolved external symbol VectorClampMagnitude2D
+VectorMathematicsTests.obj : error LNK2001: unresolved external symbol VectorClamp
+VectorMathematicsTests.obj : error LNK2001: unresolved external symbol VectorCross2D
+VectorMathematicsTests.obj : error LNK2001: unresolved external symbol VectorClampMagnitude
+VectorMathematicsTests.obj : error LNK2001: unresolved external symbol VectorClamp2D
+S:\Documents\Forsberg\Projects\VectorMath\vectormath-cpp-FunYun\x64\Release\VectorMathematicsTests.exe : fatal error LNK1120: 6 unresolved externals
