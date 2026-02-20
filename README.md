@@ -159,9 +159,7 @@ This powers:
 
 Implementing this manually clarifies how physics engines work internally.
 
-5. **Matrices (Future Work)**
-
-While not implemented yet, matrices are the natural extension:
+5. **Matrices**
 
 - Transformations (rotate / scale / translate)
 - Camera projection
