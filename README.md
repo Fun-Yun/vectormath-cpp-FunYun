@@ -1,12 +1,24 @@
 ## vectormath-cpp
 
+### Pong Features
+
+-Player 1: W - up, S - down
+-Player 2: Up arrow - up, Down arrow - down
+-Restart = R
+
+Game ends first to 5.
+Ball gets faster every time it bounces
+UI for score and win message
+Ball bounces off walls and paddles
+Ball resets when off screen
+
 ### C++ Math DLL + Unity Pong Clone Integration
 
-This project explores vector math by implementing a custom C++ math library and compiling it into a DLL, then integrating it into a Unity Pong clone. The purpose of this project was to understand the mathematics behind movement, collision, and reflection in games instead of relying only on built-in systems and functions.
+This project explores vector math by implementing a custom C++ math library and compiling it into a DLL, then integrating it into a Unity Pong clone. The purpose of this project was to understand the mathematics behind movement, collision, and reflection in games instead of relying on built-in systems and functions in unity and other game engines.
 
 The project consists of:
 
-- A native C++ math library
+- A C++ vector math library
 - A C++ console test application
 - A Unity project using the DLL via C# interop
 

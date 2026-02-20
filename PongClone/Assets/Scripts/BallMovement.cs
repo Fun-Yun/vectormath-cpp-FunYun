@@ -25,7 +25,6 @@ public class BallMovement : MonoBehaviour
     {
         if (!gameEnded)
         {
-            //transform.Translate(direction * (speed * Time.deltaTime));
             movement = VectorMath.VectorScale2D(direction, speed * Time.deltaTime);
             position = VectorMath.VectorAdd2D(position, movement);
             transform.position = position.ToUnityVector2();
@@ -62,29 +61,8 @@ public class BallMovement : MonoBehaviour
             direction = VectorMath.VectorReflect2D(direction, surfaceNormal);
             direction = VectorMath.VectorNormalize2D(direction);
         }
-
         speed += .5f;
-
-        //Get the Surface Normal
-        //Vec2 surfaceNormal;
-
-        /* if (collision.gameObject.CompareTag("Top"))
-           surfaceNormal = new Vec2(0, -1);
-        else if (collision.gameObject.CompareTag("Bottom"))
-            surfaceNormal = new Vec2(0, 1);
-        else if (collision.gameObject.CompareTag("Player1"))
-            surfaceNormal = new Vec2(1, 0);
-        else if (collision.gameObject.CompareTag("Player2"))
-            surfaceNormal = new Vec2(-1, 0);
-        else
-            return;
-
-        //Reflect ball reflected = V - 2 * (V · N) * N
-        direction = VectorMath.VectorReflect2D(direction, surfaceNormal);
-        speed += .5f; */
     }
-
-    //Make the ball bounce different depending on where it hits paddle, like OG Pong
     void GetBounceAngle(Collision2D paddleCollision)
     {
         Vec2 paddlePosition = Vec2.FromUnityVector2(paddleCollision.transform.position);
@@ -104,8 +82,7 @@ public class BallMovement : MonoBehaviour
         float directionX = Mathf.Cos(angle);
         float directionY = Mathf.Sin(angle);
 
-        if (!isPlayer1)
-            directionX = -directionX;
+        if (!isPlayer1) directionX = -directionX;
 
         direction = new Vec2(directionX, directionY);
         
@@ -115,12 +92,8 @@ public class BallMovement : MonoBehaviour
     
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("TRIGGER HIT: " + other.name);
-        
         if (other.CompareTag("Goal"))
-        {
             ResetBall();
-        }
     }
 }
 
