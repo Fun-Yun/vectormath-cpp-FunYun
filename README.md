@@ -3,13 +3,19 @@
 ### Pong Features
 
 -Player 1: W - up, S - down
+
 -Player 2: Up arrow - up, Down arrow - down
+
 -Restart = R
 
 Game ends first to 5.
+
 Ball gets faster every time it bounces
+
 UI for score and win message
+
 Ball bounces off walls and paddles
+
 Ball resets when off screen
 
 ### C++ Math DLL + Unity Pong Clone Integration
